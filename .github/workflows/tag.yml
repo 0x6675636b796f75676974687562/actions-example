@@ -1,0 +1,14 @@
+name: Push a tag
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Push a tag
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3

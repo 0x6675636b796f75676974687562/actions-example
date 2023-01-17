@@ -1,0 +1,12 @@
+name: Manual run
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Manual run
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
