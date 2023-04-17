@@ -16,14 +16,19 @@ jobs:
       matrix:
         debian-version:
           - 6
+          - 7
         arch:
           - x86
           - x86_64
         include:
+          - arch: x86
+            debian-image: i386/debian
           - arch: x86_64
             debian-image: debian
           - debian-version: 6
             debian-name: squeeze
+          - debian-version: 7
+            debian-name: wheezy
         exclude:
             # There's no x86 image of Debian Squeeze
           - debian-version: 6
