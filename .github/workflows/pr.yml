@@ -17,8 +17,6 @@ jobs:
           - x86
           - x86_64
         include:
-          - arch: x86
-            debian-image: i386/debian
           - arch: x86_64
             debian-image: debian
           - debian-version: 6
