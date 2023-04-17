@@ -11,8 +11,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        debian-version: [ 6 ]
-        arch: [ x86, x86_64 ]
+        debian-version:
+          - 6
+        arch:
+          - x86
+          - x86_64
         include:
           - arch: x86
             debian-image: i386/debian
