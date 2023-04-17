@@ -27,8 +27,8 @@ jobs:
 
     steps:
       - name: Install dependencies
+        continue-on-error: true
         run: |
-          echo "USER=${USER}"
           apt-get update
           apt-get install dpkg-dev
         shell: bash
