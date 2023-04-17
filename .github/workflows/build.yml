@@ -16,14 +16,19 @@ jobs:
       matrix:
         debian-version:
           - 6
+          - 7
         arch:
           - x86
           - x86_64
         include:
+          - arch: x86
+            debian-image: i386/debian
           - arch: x86_64
             debian-image: debian
           - debian-version: 6
             debian-name: squeeze
+          - debian-version: 7
+            debian-name: wheezy
         exclude:
             # There's no x86 image of Debian Squeeze
           - debian-version: 6
@@ -53,6 +58,8 @@ jobs:
 
           mkdir -p /etc/apt/
           echo 'deb [ trusted=yes,allow-insecure=yes ] http://archive.debian.org/debian ${{ matrix.debian-name }} main contrib non-free' >>/etc/apt/sources.list
+          echo 'deb [ trusted=yes,allow-insecure=yes ] http://archive.debian.org/debian ${{ matrix.debian-name }}-lts main contrib non-free' >>/etc/apt/sources.list
+          echo 'deb [ trusted=yes,allow-insecure=yes ] http://archive.debian.org/debian-security ${{ matrix.debian-name }}/updates main contrib non-free' >>/etc/apt/sources.list
         shell: bash
 
       - name: Install dependencies
