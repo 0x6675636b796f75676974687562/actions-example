@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    name: Pull request
+    name: Pull request (Debian ${{ matrix.debian-version }} ${{ matrix.arch }})
     runs-on: ubuntu-latest
 
     strategy:
