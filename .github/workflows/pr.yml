@@ -26,6 +26,12 @@ jobs:
       image: ${{ matrix.debian-image }}:${{ matrix.debian-version }}
 
     steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install dpkg-dev
+        shell: bash
+
       - name: uname -a
         run: |
           cat /etc/issue
