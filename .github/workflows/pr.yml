@@ -18,6 +18,10 @@ jobs:
             debian-image: i386/debian
           - arch: x86_64
             debian-image: debian
+          - debian-version: 6
+            debian-name: squeeze
+          - debian-version: 7
+            debian-name: wheezy
         exclude:
           - arch: x86
             debian-version: 6
@@ -29,6 +33,8 @@ jobs:
       - name: Install dependencies
         continue-on-error: true
         run: |
+          echo 'deb http://archive.debian.org/debian ${{ matrix.debian-name }} main contrib non-free' >>/etc/apt/sources.list
+          cat /etc/apt/sources.list
           apt-get update
           apt-get install dpkg-dev
         shell: bash
