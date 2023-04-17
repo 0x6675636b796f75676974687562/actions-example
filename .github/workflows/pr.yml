@@ -26,8 +26,6 @@ jobs:
       image: ${{ matrix.debian-image }}:${{ matrix.debian-version }}
 
     steps:
-      - uses: actions/checkout@v3
-
       - name: uname -a
         run: |
           uname -a
