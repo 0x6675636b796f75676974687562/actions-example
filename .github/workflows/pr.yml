@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        debian-version: [ 6, 7 ]
+        debian-version: [ 6 ]
         arch: [ x86, x86_64 ]
         include:
           - arch: x86
@@ -20,9 +20,8 @@ jobs:
             debian-image: debian
           - debian-version: 6
             debian-name: squeeze
-          - debian-version: 7
-            debian-name: wheezy
         exclude:
+            # There's no x86 image of Debian Squeeze
           - arch: x86
             debian-version: 6
 
@@ -50,8 +49,8 @@ jobs:
 
           apt-get --version
           apt-get --yes update
-          apt-get --yes --force-yes upgrade
-          apt-get --yes --force-yes install dpkg-dev
+          apt-get --yes upgrade
+          apt-get --yes install dpkg-dev
         shell: bash
 
       - name: uname -a
