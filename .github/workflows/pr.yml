@@ -30,12 +30,15 @@ jobs:
       image: ${{ matrix.debian-image }}:${{ matrix.debian-version }}
 
     steps:
-      - name: Install dependencies
-        continue-on-error: true
+      - name: Display APT version
         run: |
-          # Don't abort the step if apt returns a non-zero status
-          set +e
+          echo '```'         >>${GITHUB_STEP_SUMMARY}
+          apt-get --version  >>${GITHUB_STEP_SUMMARY}
+          echo '```'         >>${GITHUB_STEP_SUMMARY}
+        shell: bash
 
+      - name: Configure APT
+        run: |
           # Ignore KEYEXPIRED errors
           mkdir -p /etc/apt/apt.conf.d/
           # `AllowUnauthenticated` only makes sense since APT 1.1.
@@ -47,18 +50,21 @@ jobs:
 
           mkdir -p /etc/apt/
           echo 'deb [ trusted=yes,allow-insecure=yes ] http://archive.debian.org/debian ${{ matrix.debian-name }} main contrib non-free' >>/etc/apt/sources.list
+        shell: bash
 
-          apt-get --version
+      - name: Install dependencies
+        continue-on-error: true
+        run: |
+          # Don't abort the step if apt returns a non-zero status
+          set +e
+
           apt-get --yes update
           apt-get --yes upgrade
           apt-get --yes install dpkg-dev
         shell: bash
 
-      - name: uname -a
+      - name: Run dpkg-architecture
         run: |
-          cat /etc/issue
-          cat /etc/debian_version
-          uname -a
           dpkg-architecture
         shell: bash
 
