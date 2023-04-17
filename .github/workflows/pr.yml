@@ -33,8 +33,13 @@ jobs:
       - name: Install dependencies
         continue-on-error: true
         run: |
+          # Don't abort the step if apt returns a non-zero status
+          set +e
+
           # Ignore KEYEXPIRED errors
           mkdir -p /etc/apt/apt.conf.d/
+          # `AllowUnauthenticated` only makes sense since APT 1.1.
+          # Before that, `--force-yes` should be used.
           echo 'APT::Get::AllowUnauthenticated "true";'                >>/etc/apt/apt.conf.d/99allow-unauthenticated
           echo 'Acquire::AllowInsecureRepositories "true";'            >>/etc/apt/apt.conf.d/99allow-unauthenticated
           echo 'Acquire::AllowDowngradeToInsecureRepositories "true";' >>/etc/apt/apt.conf.d/99allow-unauthenticated
@@ -43,8 +48,10 @@ jobs:
           mkdir -p /etc/apt/
           echo 'deb [ trusted=yes,allow-insecure=yes ] http://archive.debian.org/debian ${{ matrix.debian-name }} main contrib non-free' >>/etc/apt/sources.list
 
-          apt-get update
-          apt-get install dpkg-dev
+          apt-get --version
+          apt-get --yes update
+          apt-get --yes --force-yes upgrade
+          apt-get --yes --force-yes install dpkg-dev
         shell: bash
 
       - name: uname -a
