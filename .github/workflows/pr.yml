@@ -8,8 +8,30 @@ jobs:
     name: Pull request
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        debian-version: [ 6, 7 ]
+        arch: [ x86, x86_64 ]
+        include:
+          - arch: x86
+            debian-image: i386/debian
+          - arch: x86_64
+            debian-image: debian
+        exclude:
+          - arch: x86
+            debian-version: 6
+
+    container:
+      image: ${{ matrix.debian-image }}:${{ matrix.debian-version }}
+
     steps:
       - uses: actions/checkout@v3
+
+      - name: uname -a
+        run: |
+          uname -a
+        shell: bash
 
       - run: |
           echo "GITHUB_ACTOR = ${GITHUB_ACTOR}"
