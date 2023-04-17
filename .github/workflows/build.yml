@@ -58,6 +58,8 @@ jobs:
 
           mkdir -p /etc/apt/
           echo 'deb [ trusted=yes,allow-insecure=yes ] http://archive.debian.org/debian ${{ matrix.debian-name }} main contrib non-free' >>/etc/apt/sources.list
+          echo 'deb [ trusted=yes,allow-insecure=yes ] http://archive.debian.org/debian ${{ matrix.debian-name }}-lts main contrib non-free' >>/etc/apt/sources.list
+          echo 'deb [ trusted=yes,allow-insecure=yes ] http://archive.debian.org/debian-security ${{ matrix.debian-name }}/updates main contrib non-free' >>/etc/apt/sources.list
         shell: bash
 
       - name: Install dependencies
