@@ -28,7 +28,10 @@ jobs:
     steps:
       - name: uname -a
         run: |
+          cat /etc/issue
+          cat /etc/debian_version
           uname -a
+          dpkg-architecture
         shell: bash
 
       - run: |
