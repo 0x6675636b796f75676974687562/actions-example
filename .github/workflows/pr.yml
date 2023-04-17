@@ -23,10 +23,10 @@ jobs:
             debian-image: debian
           - debian-version: 6
             debian-name: squeeze
-#        exclude:
-#            # There's no x86 image of Debian Squeeze
-#          - arch: x86
-#            debian-version: 6
+        exclude:
+            # There's no x86 image of Debian Squeeze
+          - debian-version: 6
+            arch: x86
 
     container:
       image: ${{ matrix.debian-image }}:${{ matrix.debian-version }}
